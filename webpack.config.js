@@ -14,9 +14,23 @@ module.exports = {
         // }
     },
     devtool: 'source-map',
-    watch: true,
+    // watch: true,
     module: {
         rules: [
+            {
+                test: /\.less$/,
+                use: ['style-loader', 'css-loader', 'less-loader']
+            },
+            {
+                test: /\.jpg$/,
+                use: {
+                    // loader: 'file-loader'
+                    loader: 'url-loader',
+                    options: {
+                        limit: 20*1024
+                    }
+                }
+            },
             {
                 test: /\.js$/,
                 use: {
