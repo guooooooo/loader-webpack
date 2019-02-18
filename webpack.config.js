@@ -14,18 +14,26 @@ module.exports = {
         // }
     },
     devtool: 'source-map',
+    watch: true,
     module: {
         rules: [
             {
                 test: /\.js$/,
                 use: {
-                    loader: 'babel-loader',
+                    loader: 'banner-loader',
                     options: {
-                        presets: [
-                            '@babel/preset-env'
-                        ]
+                        text: 'guo',
+                        filename: path.resolve(__dirname, './src/banner.js')
                     }
                 }
+                // use: {
+                //     loader: 'babel-loader',
+                //     options: {
+                //         presets: [
+                //             '@babel/preset-env'
+                //         ]
+                //     }
+                // }
             }
         ]
         // rules: [
