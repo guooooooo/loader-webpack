@@ -15,4 +15,4 @@
 
 // document.body.appendChild(img)
 
-// import './index.less'
+import './index.less'

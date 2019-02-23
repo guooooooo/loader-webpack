@@ -3,6 +3,8 @@ let DonePlugin = require('./plugins/DonePlugin')
 let AsyncPlugin = require('./plugins/AsyncPlugin')
 let HtmlWebpackPlugin = require('html-webpack-plugin')
 let FileListPlugin = require('./plugins/FileListPlugin')
+let MiniCssExtractPlugin = require('mini-css-extract-plugin')
+let InlineSourcePlugin = require('./plugins/InlineSourcePlugin')
 
 module.exports = {
     mode: 'development',
@@ -11,13 +13,37 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
+    module: {
+        rules: [
+            {
+                test: /\.less$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+            }
+        ]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename: 'main.css'
+        }),
+        // new DonePlugin(),
+        // new AsyncPlugin(),
+        new FileListPlugin({
+            filename: 'list.md'
+        }),
+        new InlineSourcePlugin({
+            match: /\.(js|css)/
+        })
+    ],
     // resolveLoader: {
     //     modules: ['node_modules', path.resolve(__dirname, 'loader')]
     //     // alias: {
     //     //     loader1: path.resolve(__dirname, 'loader', 'loader1.js')
     //     // }
     // },
-    devtool: 'source-map',
+    // devtool: 'source-map',
     // watch: true,
     // module: {
     //     rules: [
@@ -77,14 +103,5 @@ module.exports = {
         //     }
         // ]
     // }
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './src/index.html'
-        }),
-        new DonePlugin(),
-        new AsyncPlugin(),
-        new FileListPlugin({
-            filename: 'list.md'
-        })
-    ]
+    
 }
